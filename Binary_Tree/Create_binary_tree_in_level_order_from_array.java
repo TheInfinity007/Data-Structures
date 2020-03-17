@@ -65,7 +65,6 @@ class Main
 				q.add(curr.left);
 			if(curr.right != null)
 				q.add(curr.right);
-			curr = q.peek();
 		}
 	}
 }

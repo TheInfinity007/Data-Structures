@@ -1,4 +1,9 @@
-/*Given a binary tree, print all nodes of the tree in level order traversal. print nodes at same level separated by space and give new line between every level. (There should be no space after last node of each level.) */
+/*
+Print nodes at odd levels of the binary tree  
+Given a binary tree, print all nodes at odd levels of the tree. Assume the root node is at level 1 i.e. odd level.
+Complete the function printOddLevels() which will take the root node of the tree as parameter and print the nodes at odd levels of the binary tree.
+*/
+
 
 import java.util.Scanner;
 import java.util.Queue;
@@ -23,6 +28,34 @@ class Main
 
         System.out.println("\nPrinting Tree with Level Wise Traversal");
         printLevelWise(root);
+
+        System.out.println("\nPrinting Nodes at Odd Levels");
+        printOddLevels(root);
+    }
+
+    static void printOddLevels(Node root)
+    {
+        Queue<Node> q = new LinkedList<Node>();
+        q.add(root);
+        q.add(null);
+        int num = 1;
+        Node curr = q.poll();
+        while(q.size() != 0)
+        {
+            if(curr == null)
+                num++;
+            else
+            {
+                q.add(curr.left);
+                q.add(curr.right);
+                
+                if(num%2 == 1)
+                    System.out.print(curr.data + " ");
+                if(q.peek() == null)
+                    q.add(null);
+            }
+            curr = q.poll();  
+        }
     }
 
     static void printLevelWise(Node root)
@@ -50,8 +83,6 @@ class Main
             curr = q.poll();
         }
     }
-
-
     static Node buildTree(int arr[], int n)
     {
         Node node = null;
