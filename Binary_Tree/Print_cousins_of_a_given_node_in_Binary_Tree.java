@@ -35,14 +35,50 @@ class Main
         System.out.println("\nPrinting Tree with Level Wise Traversal");
         printLevelWise(root);
 
-        System.out.println("Printing cousins of node 6 " + printCousins(root, 6));
+        System.out.println("Printing cousins of node 6 ");
+        printCousins(root, 6);
     }
 
     static void printCousins(Node node, int key)
     {
-        
+        Queue<Node> q = new LinkedList<Node>();
+        q.add(node);
+        q.add(null);
+        int found = 0;
+        int print = 0;
+        int count = 0;
+        while(q.size() != 0)
+        {            
+            node = q.poll();
+            if(node == null){
+                if(found == 1)
+                    print = 1;
+            }
+            else if(print == 1)
+            {
+                System.out.print(node.data + " ");
+                count++;
+            }
+            else
+            {
+                if((node.left != null && node.left.data == key) || (node.right != null && node.right.data == key))
+                {
+                    found = 1;
+                }
+                else
+                {
+                    q.add(node.left);
+                    q.add(node.right);
+                    if(q.peek() == null)
+                        q.add(null);
+                }
+            }
+        }
+        if(count == 0)
+            System.out.println(-1);
     }
     
+
     static void printLevelWise(Node root)
     {
         Queue<Node> q = new LinkedList<Node>();
