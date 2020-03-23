@@ -22,60 +22,61 @@ class Main
         Scanner sc = new Scanner(System.in);
         int n, i;
 
-        System.out.println("Enter the no of nodes");
+        System.out.println("Enter the no of nodes in First tree");
         n = sc.nextInt();
 
         System.out.println("Enter the elements");
-        int arr[]=new int[n];
+        int arr1[]=new int[n];
         for(i=0; i < n; i++)
-            arr[i] = sc.nextInt();
+            arr1[i] = sc.nextInt();
 
-        Node root = null;
-        root = buildTree(arr, n);
+        System.out.println("Enter the no of nodes in Second tree");
+        n = sc.nextInt();
 
-        System.out.println("\nPrinting Tree with Level Wise Traversal");
-        printLevelWise(root);
+        System.out.println("Enter the elements");
+        int arr2[]=new int[n];
+        for(i=0; i < n; i++)
+            arr2[i] = sc.nextInt();
 
-        int res = isFoldable(root);
+        Node root1 = null;
+        root1 = buildTree(arr1, root1, 0);
+        
+        Node root2 = null;
+        root2 = buildTree(arr1, root2, 0);
+
+        System.out.println("\nPrinting Tree1 with Level Wise Traversal");
+        printLevelWise(root1);
+
+        System.out.println("\nPrinting Tree2 with Level Wise Traversal");
+        printLevelWise(root2);
+
+        int res = areSameTree(root1, root2);
         if(res == 1)
-            System.out.println("The Tree is Foldable");
+            System.out.println("The Trees are same");
         else
-            System.out.println("The tree is not foldable");
+            System.out.println("The tree are not same");
     }
 
-    static int isFoldable(Node node)
+    static int areSameTree(Node node1, Node node2)
     {
         boolean res;
-        if(node == null)
+        if(node1 == null && node2 == null)
             return 1;
-        mirror(node.left);
 
-        res = isStructSame(node.left, node.right);
-        mirror(node.left);
+        res = isStructAndDataSame(node1, node2);
 
         if(res)
             return 1;
         return 0;
     }
-    static boolean isStructSame(Node a, Node b)
+    static boolean isStructAndDataSame(Node a, Node b)
     {
         if(a == null && b == null)
             return true;   //true
-        if(a != null && b != null && isStructSame(a.left, b.left) && isStructSame(a.right, b.right))
+        if(a != null && b != null && a.data == b.data && isStructAndDataSame(a.left, b.left) && isStructAndDataSame(a.right, b.right))
             return true;
         
         return false;
-    }
-    static void mirror(Node node)
-    {
-        if(node == null)
-            return;
-        Node temp = null;
-        temp = node.left;
-        node.left = node.right;
-        node.right = temp;
-        mirror(node.left);
-        mirror(node.right);
     }
 
     static void printLevelWise(Node root)
@@ -104,31 +105,13 @@ class Main
         }
     }
 
-
-    static Node buildTree(int arr[], int n)
+    static Node buildTree(int arr[], Node root, int i)
     {
-        Node node = null;
-        if(n < 1)               //if array is empty;
-            return node;
-        Queue <Node> q = new LinkedList<Node>();
-        Node root = new Node(arr[0]);       //add first element to the root
-        q.add(root);
-        node = root;
-        
-        for(int i = 1; i < n; i++)
+        if(i < arr.length)
         {
-            if(node.left == null)
-            {
-                node.left = new Node(arr[i]);
-                q.add(node.left);
-            }
-            else
-            {
-                node.right = new Node(arr[i]);
-                q.add(node.right);
-                q.poll();
-                node = q.peek();
-            }
+            root = new Node(arr[i]);
+            root.left = buildTree(arr, root.left, 2*i+1);
+            root.right = buildTree(arr, root.right, 2*i+2);
         }
         return root;
     }
