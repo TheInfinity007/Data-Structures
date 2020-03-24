@@ -41,6 +41,8 @@ class Main
 
     static int kSmallest(Node node, int k)
     {
+        if(node == null)
+            return -1;
         ArrayList <Integer>arr = new ArrayList<Integer>();
         traverseInorder(node, arr, k);
         if(arr.size() < k)
