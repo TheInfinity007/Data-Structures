@@ -54,12 +54,14 @@ class Main
         }
         return node;
     }
+
     static Node minValueNode(Node node)
     {
         if(node.left == null)
             return node;
         return minValueNode(node.left);
     }
+
     public static Node insert(Node node, int data)
     {
         if(node == null)
@@ -70,6 +72,7 @@ class Main
             node.right = insert(node.right, data);
         return node;
     }
+
     static Node search(Node node, int key)
     {
         if(node == null || node.data == key)
@@ -79,6 +82,7 @@ class Main
         
         return search(node.right, key);
     }
+    
     static void printInorder(Node node)
     {
         if(node != null)
