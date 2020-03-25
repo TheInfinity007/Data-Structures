@@ -17,65 +17,65 @@ Sample Output
 1 2 3 4 5 7 8
 */
 
-import java.util.Scanner;
-class Main
-{
-    public static void main(String[] args) {
-        String input = "7\n4 2 7 1 3 5 8";
-        Scanner sc = new Scanner(input);
-
-        int n = sc.nextInt();
-        int arr[] = new int[n];
-        for(int i = 0; i< n; i++)
-        {
-            arr[i] = sc.nextInt();
-        }
-        Node root = buildSearchTree(arr, n);
-        
-        System.out.println("Printing the inorder traversal of BST:");
-        printInorder(root);
-    }
-
-    static Node buildSearchTree(int t[], int n) 
+    import java.util.Scanner;
+    class Main
     {
-        Node root = null;
-        for(int i = 0; i < t.length; i++)
-        {
-          root = insert(root, t[i]);
+        public static void main(String[] args) {
+            String input = "7\n4 2 7 1 3 5 8";
+            Scanner sc = new Scanner(input);
+
+            int n = sc.nextInt();
+            int arr[] = new int[n];
+            for(int i = 0; i< n; i++)
+            {
+                arr[i] = sc.nextInt();
+            }
+            Node root = buildSearchTree(arr, n);
+            
+            System.out.println("Printing the inorder traversal of BST:");
+            printInorder(root);
         }
-        return root;
-    }
-  
-    static Node insert(Node node, int key)
-    {
-        if(node == null)
-            return new Node(key);
-        if(node.data > key)
-            node.left = insert(node.left, key);
-        else
-            node.right = insert(node.right, key);
-        return node;
+
+        static Node buildSearchTree(int t[], int n) 
+        {
+            Node root = null;
+            for(int i = 0; i < t.length; i++)
+            {
+            root = insert(root, t[i]);
+            }
+            return root;
+        }
+    
+        static Node insert(Node node, int key)
+        {
+            if(node == null)
+                return new Node(key);
+            if(node.data > key)
+                node.left = insert(node.left, key);
+            else
+                node.right = insert(node.right, key);
+            return node;
+        }
+
+        static void printInorder(Node node)
+        {
+            if(node != null)
+            {
+                printInorder(node.left);
+                System.out.print(node.data + " ");
+                printInorder(node.right);
+            }
+        }
     }
 
-    static void printInorder(Node node)
+    class Node
     {
-        if(node != null)
-        {
-            printInorder(node.left);
-            System.out.print(node.data + " ");
-            printInorder(node.right);
-        }
+    int data;
+    Node left;
+    Node right;
+    public Node(){};
+    public Node(int d)
+    {
+        data=d;
     }
-}
-
-class Node
-{
-  int data;
-  Node left;
-  Node right;
-  public Node(){};
-  public Node(int d)
-  {
-    data=d;
-  }
-}
+    }
