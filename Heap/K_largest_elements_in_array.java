@@ -45,7 +45,7 @@ class Main
     int heap[] = new int[100];
     int heapSize = -1;
 
-    void insert(int element)
+    void insert(int element)    //insert max heap
     {
         heap[++heapSize] = element;
         int now = heapSize;
