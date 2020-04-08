@@ -58,56 +58,52 @@ class Main
         }
     }
 
-    int heap[] = new int[100];
-    int heapSize = -1;
-
-    void insert(int element)        //insert maxheap
+    static void modifyMintoMax(int array[], int n)
     {
-        heap[++heapSize] = element;
-        int now = heapSize;
-        while(heap[(now-1)/2] < heap[now])
+        for(int i = (n-2)/2; i >= 0; --i)
         {
-            heap[now] = heap[(now-1)/2];
-            heap[(now-1)/2] = element;
-            now = (now-1)/2;
+            heapify(array, i, n);        //heapify all the internal nodes
+            // maxHeapity(array, i, n);         //both methods work
         }
+            
+
     }
 
-    int deleteMax()
+    static void maxHeapify(int arr[], int i, int n)
     {
-        int max, now, lastElement, child;
-        max = heap[0];
-        lastElement = heap[heapSize--];
-        heap[0] = lastElement;
-        for(now = 0; now*2 < heapSize; now = child)
+        int l, r, largest;
+        largest = i;
+        l = 2*i+1;
+        r = 2*i+2;
+        if(l < n && arr[l] > arr[largest])
+            largest = l;
+        if(r < n && arr[r] > arr[largest])
+            largest = r;
+        if(largest != i)    //Swap largest node with the ith node
+        {
+            int temp = arr[largest];
+            arr[largest] = arr[i];
+            arr[i] = temp;
+            maxHeapify(arr, largest, n);        //heapify all its 
+        }
+    }    
+    static void heapify(int arr[], int i, int n)
+    {
+        int now, child, max = arr[i];
+        
+        for(now = i; now*2 <= n-2; now = child)
         {
             child = now*2+1;
-            if(child != heapSize && heap[child] < heap[child+1])
+            if(child+1 < n && arr[child] < arr[child+1])
                 child++;
-            
-            if(heap[child] >= lastElement)
-                heap[now] = heap[child];
+            if(arr[now] < arr[child])
+            {
+                int temp = arr[now];
+                arr[now] = arr[child];
+                arr[child] = temp;
+            }
             else
                 break;
         }
-        heap[now] = lastElement;
-        return max;
-    }
-
-    static void modifyMintoMax(int array[], int n)
-    {
-        Main maxHeap = new Main();
-        for(int i = 0; i < n; i++)
-            maxHeap.insert(array[i]);
-
-        System.out.println("After insertion: ");
-        for(int i = 0; i < n; i++)
-            System.out.print(maxHeap.heap[i] + " ");
-        System.out.println();
-        
-        for(int i = 0; i < n; i++)
-        {
-            array[i] = maxHeap.heap[i];
-        }    
     }
 }
