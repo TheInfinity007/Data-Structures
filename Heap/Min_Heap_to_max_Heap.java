@@ -84,9 +84,10 @@ class Main
             int temp = arr[largest];
             arr[largest] = arr[i];
             arr[i] = temp;
-            maxHeapify(arr, largest, n);        //heapify all its 
+            maxHeapify(arr, largest, n);        //heapify all its successor
         }
-    }    
+    }
+
     static void heapify(int arr[], int i, int n)
     {
         int now, child, max = arr[i];
@@ -98,6 +99,7 @@ class Main
                 child++;
             if(arr[now] < arr[child])
             {
+                //Swap
                 int temp = arr[now];
                 arr[now] = arr[child];
                 arr[child] = temp;
