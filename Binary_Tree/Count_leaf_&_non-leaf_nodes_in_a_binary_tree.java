@@ -11,7 +11,8 @@ class Main
 {
     public static void main(String[] args)
     {
-        Scanner sc = new Scanner(System.in);
+        String input = "9\n1 2 3 4 5 6 7 8 9";
+        Scanner sc = new Scanner(input);
         int n, i;
 
         System.out.println("Enter the no of nodes");
